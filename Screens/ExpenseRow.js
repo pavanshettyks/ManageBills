@@ -28,7 +28,7 @@ export default class ExpenseRow extends React.Component{
             <View style = {styles.container}>
                 <TextInput placeholder ="Enter Item " style = {styles.input_title}
                             onChangeText ={this.valueChanged_Title}  value = {this.props.title} />
-                <TextInput placeholder ="Enter Amount" style = {styles.input_cost}
+                <TextInput keyboardType="numeric" placeholder ="Enter Amount" style = {styles.input_cost}
                             onChangeText ={this.valueChanged_Cost}    value = {this.props.cost}/>
                 <Button   title="X" onPress = {this.deleteRow} color = 'red' style  = {styles.delete_Button}/>
             </View>

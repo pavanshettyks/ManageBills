@@ -1,38 +1,62 @@
 import React from 'react';
-import {Alert,FlatList,StyleSheet, Platform, Button, Image, TextInput, Text, View, ScrollView } from 'react-native';
+import {Alert,FlatList,StyleSheet, Platform, Button, Image, TextInput, Text, View, ScrollView,AsyncStorage } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
-//import AddFriend from './Screens/AddFriend'
+import Friend_Row from './Friend_Row'
+import {Collapse,CollapseHeader, CollapseBody, AccordionList} from 'accordion-collapse-react-native';
+import Collapsible from 'react-native-collapsible';
 
 class ManageMain extends React.Component {
+  state = {
+      owe: 20 ,
+      owed: 30,
+      collapse: true,
+      Friends:[
+                {
+                  id: "1",
+                  name: "Johny Walker",
+                  mobile:"+1657",
+                  email:"test@mail.com"
+                },
+              ]
+  }
   constructor(props){
     super(props);
+    this.get();
 
-
-    this.state = {
-        owe: 20 ,
-        owed: 30,
-        Friends:[
-                  {
-                    id: "1",
-                    name: "John",
-                    mobile:"+1",
-                    email:"test@mail.com"
-                  },
-                ]
-    }
   }
+
+  get  = async () =>{
+     //AsyncStorage.clear();
+    let Friends = '';
+    try {
+    Friends = await AsyncStorage.getItem('Friends');
+    let friends_JSON =JSON.parse(Friends);
+    console.log("Friends:",Friends);
+    if(Friends){
+      console.log("Friends_JSON_:",friends_JSON);
+      this.setState({ Friends: friends_JSON});
+      //console.log("Friends__:",Friends);
+    }
+    } catch (error) {
+    console.log(error.message);
+   }
+
+}
+
 
   willFocusAction = (payload) => {
     let params = payload.state.params;
-    console.log(this.state.Friends);
+    console.log("Mounting.",this.state.Friends);
     if (params) {
             let screen_id = payload.state.params.screen_id;
             if(screen_id == 'AddFriend'){
                 let new_friend = payload.state.params.new_friend;
+                console.log("New ROW",new_friend);
+                new_friend = [...this.state.Friends,new_friend]
+                this.setState({ Friends:new_friend});
 
-                this.setState({ Friends:[...this.state.Friends,new_friend]});
-
-                console.log(this.state.Friends);
+                AsyncStorage.setItem('Friends', JSON.stringify(new_friend));
+                console.log("Updated",new_friend);
 
             }
 
@@ -44,6 +68,7 @@ class ManageMain extends React.Component {
 
   ButtonClickCheckFunction = () =>{
   //Alert.alert("Button Clicked")
+    console.log(this.state.Friends);
   this.props.navigation.navigate('AddFriend')
   }
 
@@ -57,7 +82,10 @@ class ManageMain extends React.Component {
       return (
 
         <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'skyblue'}}>
+            <NavigationEvents
+            onWillFocus={this.willFocusAction}
 
+            />
             <Text style={styles.welcome}>Expense Manager</Text>
             <View style={{flex: 1, backgroundColor: 'powderblue'}}>
                 <View style={{flexDirection: 'row'}}>
@@ -65,15 +93,43 @@ class ManageMain extends React.Component {
                     <Text style={styles.header}>You owe: {this.state.owe}$</Text>
                     <Text style={styles.header}>You are owed: {this.state.owed}$</Text>
                     </View>
-                    <NavigationEvents
-                    onWillFocus={this.willFocusAction}
 
-                    />
                   <Button style={styles.button_add_frnd} title='Add Friend' onPress= {this.ButtonClickCheckFunction} />
                 </View>
            </View>
+           <View style = {styles.friends_view}>
+           <Button title="Open/Collapse" onPress={ () => {this.setState({collapse:!this.state.collapse})} } />
+           <View style={{ flex: this.state.collapse ? 1: 0,  height: this.state.collapse ? null : 0, overflow: 'hidden' }}>
+        { /*          }  <FlatList data = {this.state.Friends }
+                    renderItem = { ({item}) => <Friend_Row {...item}  /> }
+                    keyExtractor={(item, index) => index.toString()}
+                    />
+                    {[...this.state.Friends].map((friend) => { return (  <Friend_Row {...friend}  />  ) })}
+                    */ }
 
 
+                    <FlatList data = {this.state.Friends }
+                        renderItem = { ({item}) => <Friend_Row {...item}  /> }
+                        keyExtractor={(item, index) => index.toString()}
+                        />
+
+                  </View>
+
+
+        { /*           <Collapse>
+                        <CollapseHeader >
+                              <Text style= {this.header_List}>List of Friends</Text>
+                        </CollapseHeader>
+                        <CollapseBody>
+
+                        <FlatList data = {this.state.Friends }
+                        renderItem = { ({item}) => <Friend_Row {...item}  /> }
+                        keyExtractor={(item, index) => index.toString()}
+                        />
+
+                        </CollapseBody>
+               </Collapse>  */ }
+           </View>
           <View style={{flex: 5, backgroundColor: 'skyblue'}}>
 
           </View>
@@ -101,6 +157,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#333333',
     marginBottom: 5,
+  },
+  header_List: {
+    textAlign: 'left',
+    fontSize: 26,
+    color: '#333333',
+    marginBottom: 5,
+  },
+  friends_view:{
+    flex: 5,
+    backgroundColor: '#22FCFF',
+
   },
   button: {
     textAlign: 'left',

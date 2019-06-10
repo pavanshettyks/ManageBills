@@ -25,12 +25,22 @@ emulator -avd Pixel_2_API_25
 ### Run the APP: `react-native run-android`
 
 ###############################################################################
+Installations Needed:
 
 ManageMain.js has the main code
 
 To add react navigator ' npm install --save react-navigation'
 
 native- base ' npm install native-base --save'
+
+'npm install --save react-native-gesture-handler'
+
+npm install --save accordion-collapse-react-native
+react-native link accordion-collapse-react-native      ----> For collapsable
+
+npm install --save react-native-collapsible  ////serious issue with Flatlist
+
+######################################################
 
 https://reactnavigation.org/docs/en/getting-started.html
 https://docs.nativebase.io/Components.html#Badge

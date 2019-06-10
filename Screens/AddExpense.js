@@ -39,15 +39,15 @@ export default class AddExpense extends React.Component{
           },
             {
             id: "4",
-            title: "",
-            cost: "",
+            title: "Test",
+            cost: "120",
             with: ["ab"]
             }
             ]
     }
   }
   home_action = () =>{
-    this.props.navigation.navigate('ManageMain')
+    this.props.navigation.navigate('ManageMain', { screen_id:"AddExpense" })
   }
 
   valueChangedTitle = (id,title) =>{

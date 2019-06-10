@@ -34,7 +34,7 @@ class AddFriend extends React.Component{
                  mobile:'',
                  email:'',
                });
-   this.props.navigation.navigate('ManageMain')
+   this.props.navigation.navigate('ManageMain',{ screen_id:"AddFriend_G"  })
  }
 
   render(){
