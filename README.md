@@ -40,6 +40,10 @@ react-native link accordion-collapse-react-native      ----> For collapsable
 
 npm install --save react-native-collapsible  ////serious issue with Flatlist
 
+npm install --save react-native-vector-icons  
+react-native link react-native-vector-icons -------> For react native icons
+https://oblador.github.io/react-native-vector-icons/ --> find icon names here
+
 ######################################################
 
 https://reactnavigation.org/docs/en/getting-started.html

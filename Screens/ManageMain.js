@@ -1,9 +1,10 @@
 import React from 'react';
-import {Alert,FlatList,StyleSheet, Platform, Button, Image, TextInput, Text, View, ScrollView,AsyncStorage } from 'react-native';
+import {Alert,FlatList,StyleSheet, Platform, Button, Image,TouchableOpacity, TextInput, Text, View, ScrollView,AsyncStorage } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import Friend_Row from './Friend_Row'
 import {Collapse,CollapseHeader, CollapseBody, AccordionList} from 'accordion-collapse-react-native';
 import Collapsible from 'react-native-collapsible';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 class ManageMain extends React.Component {
   state = {
@@ -93,12 +94,16 @@ class ManageMain extends React.Component {
                     <Text style={styles.header}>You owe: {this.state.owe}$</Text>
                     <Text style={styles.header}>You are owed: {this.state.owed}$</Text>
                     </View>
-
+                    <Icon />
                   <Button style={styles.button_add_frnd} title='Add Friend' onPress= {this.ButtonClickCheckFunction} />
                 </View>
            </View>
            <View style = {styles.friends_view}>
-           <Button title="Open/Collapse" onPress={ () => {this.setState({collapse:!this.state.collapse})} } />
+                <TouchableOpacity onPress={ () => {this.setState({collapse:!this.state.collapse})} } style ={{flexDirection:'row', backgroundColor: '#1aa3ff'}}>
+                                <Text style = {{ flex: 3, padding: 5, fontWeight: 'bold',fontSize: 20}} >List of Friends</Text>
+                                <Icon name="ios-arrow-dropdown-circle" style = {{padding:5}} size={25} />
+                </TouchableOpacity>
+
            <View style={{ flex: this.state.collapse ? 1: 0,  height: this.state.collapse ? null : 0, overflow: 'hidden' }}>
         { /*          }  <FlatList data = {this.state.Friends }
                     renderItem = { ({item}) => <Friend_Row {...item}  /> }
