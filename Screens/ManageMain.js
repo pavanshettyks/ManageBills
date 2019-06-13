@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert,FlatList,StyleSheet, Platform, Button, Image,TouchableOpacity, TextInput, Text, View, ScrollView,AsyncStorage } from 'react-native';
+import {Alert,FlatList,StyleSheet, Platform, Button, Image,TouchableOpacity, TextInput, Text, View, ScrollView,AsyncStorage, BackHandler } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import Friend_Row from './Friend_Row'
 import {Collapse,CollapseHeader, CollapseBody, AccordionList} from 'accordion-collapse-react-native';
@@ -95,7 +95,7 @@ class ManageMain extends React.Component {
                     <Text style={styles.header}>You are owed: {this.state.owed}$</Text>
                     </View>
                     <Icon />
-                  <Button style={styles.button_add_frnd} title='Add Friend' onPress= {this.ButtonClickCheckFunction} />
+                  <Button style={styles.button_add_frnd} title='Add   Friend' onPress= {this.ButtonClickCheckFunction} />
                 </View>
            </View>
            <View style = {styles.friends_view}>

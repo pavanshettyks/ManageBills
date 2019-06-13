@@ -1,5 +1,5 @@
 import React from 'react'
-import {Alert,TouchableOpacity,ToastAndroid,StyleSheet, Button, TextInput, Text, View, ScrollView } from 'react-native';
+import {Alert,TouchableOpacity,ToastAndroid,StyleSheet, Button, TextInput, Text, View, ScrollView, BackHandler } from 'react-native';
 
 class AddFriend extends React.Component{
 
@@ -27,6 +27,11 @@ class AddFriend extends React.Component{
 
 //   console.log('test')
  }
+ componentWillMount = () => {
+         //Alert.alert("tesdddt");
+         BackHandler.addEventListener('hardwareBackPress', this.GoBack); // to handle back button
+}
+
  GoBack = () =>{
    //ToastAndroid.show('Home', ToastAndroid.SHORT);
    this.setState(  {
@@ -35,6 +40,8 @@ class AddFriend extends React.Component{
                  email:'',
                });
    this.props.navigation.navigate('ManageMain',{ screen_id:"AddFriend_G"  })
+   BackHandler.removeEventListener('hardwareBackPress', this.GoBack);
+   return true;  //else back button will close the app
  }
 
   render(){

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Text ,Alert,View, TouchableOpacity, Button, StyleSheet, FlatList } from 'react-native';
+import {Text ,Alert,View, TouchableOpacity, Button, StyleSheet, FlatList,BackHandler  } from 'react-native';
 import { Container, Fab,Icon} from 'native-base';
 import ExpenseRow from './ExpenseRow';
 import Dummy from './Dummy';
@@ -23,7 +23,7 @@ export default class AddExpense extends React.Component{
               },
               {
               id: "2",
-              title: "Onion",
+              title: "Onoion",
               cost: "43",
               with: [
                 "raj",
@@ -46,8 +46,28 @@ export default class AddExpense extends React.Component{
             ]
     }
   }
+
+  componentWillMount = () => {
+          //Alert.alert("tesdddt");
+          BackHandler.addEventListener('hardwareBackPress', this.home_action);
+ }
+
+ componentWillUnMount = () => {
+  // this.backHandler.remove()
+  Alert.alert("tesdddt");
+        BackHandler.removeEventListener('hardwareBackPress', this.home_action);
+}
+
+
+
+
   home_action = () =>{
+  //  Alert.alert("test");
+    //this.props.navigation.goBack(null);
+
     this.props.navigation.navigate('ManageMain', { screen_id:"AddExpense" })
+    BackHandler.removeEventListener('hardwareBackPress', this.home_action);
+    return true;
   }
 
   valueChangedTitle = (id,title) =>{
