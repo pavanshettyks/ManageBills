@@ -1,6 +1,7 @@
 import React from 'react'
 import {Text ,Alert,View, TouchableOpacity, Button, StyleSheet, FlatList,BackHandler  } from 'react-native';
-import { Container, Fab,Icon} from 'native-base';
+import { Container, Fab} from 'native-base';
+import Icon from 'react-native-vector-icons/Ionicons';
 import ExpenseRow from './ExpenseRow';
 import Dummy from './Dummy';
 
@@ -10,6 +11,9 @@ export default class AddExpense extends React.Component{
     var id_n = 3;
       this.state = {
             id:"4",
+            totalCost:"0",
+            PaidBy:"Me",
+            Friends: [],
             Expense : [
               {
               id: "1",
@@ -48,30 +52,20 @@ export default class AddExpense extends React.Component{
   }
 
   componentWillMount = () => {
-          //Alert.alert("tesdddt");
           BackHandler.addEventListener('hardwareBackPress', this.home_action);
  }
 
  componentWillUnMount = () => {
-  // this.backHandler.remove()
-  Alert.alert("tesdddt");
         BackHandler.removeEventListener('hardwareBackPress', this.home_action);
 }
 
-
-
-
   home_action = () =>{
-  //  Alert.alert("test");
-    //this.props.navigation.goBack(null);
-
     this.props.navigation.navigate('ManageMain', { screen_id:"AddExpense" })
     BackHandler.removeEventListener('hardwareBackPress', this.home_action);
     return true;
   }
 
   valueChangedTitle = (id,title) =>{
-   //  Alert.alert(title+' '+id)
         this.setState({ Expense: this.state.Expense.map(expense => {
             if(expense.id === id){
                   expense.title = title;
@@ -80,11 +74,14 @@ export default class AddExpense extends React.Component{
           })
        });
   }
+
   valueChangedCost = (id,cost) =>{
         this.setState({ Expense: this.state.Expense.map(expense => {
             if(expense.id === id){
                   expense.cost = cost;
             }
+            let totalcost = this.state.Expense.reduce( (total,expense) => total + Number(expense.cost), 0 )
+            this.setState({totalCost: String(totalcost)});
             return expense;
           })
        });
@@ -98,6 +95,7 @@ export default class AddExpense extends React.Component{
   clear_action = ()  => {
     this.setState({Expense:[]});
     this.setState({id:"0"});
+      this.setState({totalCost:"0"});
   }
   save_action = ()  => {
      Alert.alert('coming soon');
@@ -106,12 +104,10 @@ export default class AddExpense extends React.Component{
   fab_action = ()  => {
      let id = String(Number(this.state.id)+1);
       this.setState({id:String(Number(this.state.id)+1)});
-     //console.log(String(id_n));
-     //Alert.alert(this.state.id);
      const new_row = {
               id: id,
               title: "",
-              cost: "",
+              cost: "0",
               with:[]
      }
 
@@ -127,6 +123,10 @@ export default class AddExpense extends React.Component{
       <Container>
       <View style = {{ flex : 1}} >
 
+          <View >
+                <Text>Total Cost: {this.state.totalCost} </Text>
+                <Text>Paid By: {this.state.PaidBy} </Text>
+          </View>
           <View style = {styles.container}>
 
             <FlatList  data = {this.state.Expense}
@@ -134,15 +134,20 @@ export default class AddExpense extends React.Component{
                 valueChangedCost = {this.valueChangedCost} DeleteRow = {this.DeleteRow}  /> }  keyExtractor={(item, index) => index.toString()}
               />
           </View>
-
+{/*
           <Fab
             direction="left"
             containerStyle={{ }}
             style={{ backgroundColor: '#5067FF' }}
             position="topRight"
             onPress={this.fab_action}>
-            <Icon name="share" />
+            <Icon name="ios-add" />
           </Fab>
+          */}
+
+          <TouchableOpacity   style={styles.Floating_Btn} onPress={this.fab_action} >
+                              <Icon name="ios-add"  size={30} color="#ffff" />
+          </TouchableOpacity>
 
           <View style = {{ flex : 1}} >
               <TouchableOpacity style={styles.Save_Btn} >
@@ -178,6 +183,19 @@ const styles = StyleSheet.create({
     Home_Btn:{
         borderColor:'white',
       padding: 1,
+    },
+    Floating_Btn:{
+      borderWidth:1,
+      borderColor:'rgba(0,0,0,0.2)',
+      alignItems:'center',
+      justifyContent:'center',
+      width:70,
+      position: 'absolute',
+      bottom: 150,
+      right: 15,
+      height:70,
+      backgroundColor:'#5067FF',
+      borderRadius:100,
     }
 
 })
