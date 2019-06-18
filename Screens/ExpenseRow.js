@@ -32,6 +32,7 @@ export default class ExpenseRow extends React.Component{
                             onChangeText ={this.valueChanged_Cost}    value = {this.props.cost}/>
                 <Button   title="X" onPress = {this.deleteRow} color = 'red' style  = {styles.delete_Button}/>
             </View>
+          
           );
         }
 }

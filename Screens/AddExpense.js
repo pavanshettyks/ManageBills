@@ -97,6 +97,7 @@ export default class AddExpense extends React.Component{
 
   clear_action = ()  => {
     this.setState({Expense:[]});
+    this.setState({id:"0"});
   }
   save_action = ()  => {
      Alert.alert('coming soon');
@@ -133,6 +134,7 @@ export default class AddExpense extends React.Component{
                 valueChangedCost = {this.valueChangedCost} DeleteRow = {this.DeleteRow}  /> }  keyExtractor={(item, index) => index.toString()}
               />
           </View>
+
           <Fab
             direction="left"
             containerStyle={{ }}

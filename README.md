@@ -42,6 +42,11 @@ npm install --save react-native-collapsible  ////serious issue with Flatlist
 
 npm install --save react-native-vector-icons  
 react-native link react-native-vector-icons -------> For react native icons
+
+
+npm i @react-native-community/async-storage
+ react-native link @react-native-community/async-storage ---> AsyncStorage installation
+
 https://oblador.github.io/react-native-vector-icons/ --> find icon names here
 
 ######################################################
