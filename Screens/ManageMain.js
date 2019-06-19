@@ -1,17 +1,19 @@
 import React from 'react';
 import {Alert,FlatList,StyleSheet, Platform, Button, Image,TouchableOpacity, TextInput, Text, View, ScrollView, BackHandler } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { NavigationEvents } from 'react-navigation';
-import Friend_Row from './Friend_Row'
 import {Collapse,CollapseHeader, CollapseBody, AccordionList} from 'accordion-collapse-react-native';
 import Collapsible from 'react-native-collapsible';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { NavigationEvents } from 'react-navigation';
+import Friend_Row from './Friend_Row'
+import styles from './Styles/ManageMainStyles'
 
 class ManageMain extends React.Component {
   state = {
       owe: 20 ,
       owed: 30,
       collapse: true,
+      BillId: "1",
       Friends:[
                 {
                   id: "1",
@@ -31,19 +33,19 @@ class ManageMain extends React.Component {
      //AsyncStorage.clear();
     let Friends = '';
     try {
-    Friends = await AsyncStorage.getItem('Friends');
-    let friends_JSON =JSON.parse(Friends);
-    console.log("Friends:",Friends);
-    if(Friends){
-      console.log("Friends_JSON_:",friends_JSON);
-      this.setState({ Friends: friends_JSON});
-      //console.log("Friends__:",Friends);
+          Friends = await AsyncStorage.getItem('Friends');
+          let friends_JSON =JSON.parse(Friends);
+          console.log("Friends:",Friends);
+          if(Friends){
+            console.log("Friends_JSON_:",friends_JSON);
+            this.setState({ Friends: friends_JSON});
+            //console.log("Friends__:",Friends);
+          }
+        } catch (error) {
+          console.log(error.message);
     }
-    } catch (error) {
-    console.log(error.message);
-   }
 
-}
+   }
 
 
   willFocusAction = (payload) => {
@@ -62,21 +64,19 @@ class ManageMain extends React.Component {
 
             }
 
-  //      Alert.alert(params.value);
- }
+   }
 
-}
+  }
 
 
   ButtonClickCheckFunction = () =>{
   //Alert.alert("Button Clicked")
     console.log(this.state.Friends);
-  this.props.navigation.navigate('AddFriend')
+    this.props.navigation.navigate('AddFriend')
   }
 
   AddExpenseButton = () =>{
-
-    this.props.navigation.navigate('AddExpense')
+                  this.props.navigation.navigate('AddExpense')
   }
 
 
@@ -146,53 +146,5 @@ class ManageMain extends React.Component {
 }
 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 25,
-    textAlign: 'center',
-    margin: 5,
-  },
-  header: {
-    textAlign: 'left',
-    fontSize: 20,
-    color: '#333333',
-    marginBottom: 5,
-  },
-  header_List: {
-    textAlign: 'left',
-    fontSize: 26,
-    color: '#333333',
-    marginBottom: 5,
-  },
-  friends_view:{
-    flex: 5,
-    backgroundColor: '#22FCFF',
-
-  },
-  button: {
-    textAlign: 'left',
-    fontSize: 20,
-    justifyContent: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  button_add_frnd: {
-    textAlign: 'center',
-    fontSize: 20,
-    justifyContent: 'center',
-
- backgroundColor:'#00BCD4',
- borderRadius:10,
- borderWidth: 1,
- borderColor: '#fff'
-
-  }
-});
 
 export default ManageMain;
