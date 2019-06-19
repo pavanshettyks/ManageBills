@@ -9,7 +9,8 @@ export default StyleSheet.create({
   },
   header: {
     backgroundColor:'#e6ccff',
-    flex: 0.8,
+    flex: 1,
+//    marginBottom:3,
     //  height: "70%",
   },
   text:{
@@ -17,7 +18,8 @@ export default StyleSheet.create({
     color:'#000000',
     fontWeight: 'bold',
     marginTop: 6,
-  //  marginRight:5,
+  //  marginBottom:3,
+    marginLeft:3,
   },
   Save_Btn: {
     borderColor: 'white',

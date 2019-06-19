@@ -55,7 +55,7 @@ export default class AddExpense extends React.Component{
   }
 
   componentWillMount = () => {
-      
+
           BackHandler.addEventListener('hardwareBackPress', this.home_action);
  }
 
@@ -180,7 +180,7 @@ export default class AddExpense extends React.Component{
                               <Icon name="ios-add"  size={30} color="#ffff" />
           </TouchableOpacity>
 
-          <View style = {{ flex : 1}} >
+          <View style = {{ flex : 1, marginBottom:15}} >
               <TouchableOpacity style={styles.Save_Btn} >
                   <Button  title='Save' onPress ={this.save_action}/>
               </TouchableOpacity>
