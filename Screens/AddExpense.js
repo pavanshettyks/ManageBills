@@ -1,5 +1,5 @@
 import React from 'react'
-import {Text ,Alert,View, TouchableOpacity, Button, StyleSheet, FlatList,BackHandler  } from 'react-native';
+import {Text ,Alert,View, TouchableOpacity, ToastAndroid, Button, StyleSheet, FlatList,BackHandler  } from 'react-native';
 import { Container, Fab} from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ExpenseRow from './ExpenseRow';
@@ -11,7 +11,7 @@ export default class AddExpense extends React.Component{
     var id_n = 3;
       this.state = {
             id:"4",
-            totalCost:"0",
+            totalCost:"176",
             PaidBy:"Me",
             Friends: [],
             Expense : [
@@ -86,22 +86,42 @@ export default class AddExpense extends React.Component{
           })
        });
   }
+
+
+  setTotalCost = () => {
+                let totalcost = this.state.Expense.reduce( (total,expense) => total + Number(expense.cost), 0 );
+                this.setState({totalCost: String(totalcost)});
+  }
+
   DeleteRow = (id) => {
-//   Alert.alert(id);
-    this.setState({ Expense: [...this.state.Expense.filter(expense => expense.id !== id) ] });
-      console.log(this.state.Expense);
+    this.setState({ Expense: [...this.state.Expense.filter(expense => expense.id !== id) ] }, () => { this.setTotalCost() }  );  //to set state and wait to
+    console.log(this.state.Expense);
   }
 
   clear_action = ()  => {
     this.setState({Expense:[]});
     this.setState({id:"0"});
       this.setState({totalCost:"0"});
+      ToastAndroid.show('All rows cleared', ToastAndroid.SHORT);
   }
+
   save_action = ()  => {
-     Alert.alert('coming soon');
+  //  let test = this.state.totalCost;
+     //this.setTotalCost();
+     Alert.alert("Do you want to save?", "Total Cost: "+ this.state.totalCost +"$",
+                    [
+
+                      {
+                        text: 'Cancel',
+                        onPress: () => console.log('Cancel Pressed'),
+                        style: 'cancel',
+                      },
+                      {text: 'OK', onPress: () => { ToastAndroid.show('Bill Saved', ToastAndroid.SHORT);  }},
+                    ]
+                  );
   //  this.setState({...Init_State});
   }
-  fab_action = ()  => {
+  float_action = ()  => {
      let id = String(Number(this.state.id)+1);
       this.setState({id:String(Number(this.state.id)+1)});
      const new_row = {
@@ -110,11 +130,7 @@ export default class AddExpense extends React.Component{
               cost: "0",
               with:[]
      }
-
-    // Alert.alert(num);
      this.setState({Expense: [...this.state.Expense,new_row]});
-    // console.log(this.state.Expense);
-//this.setState({ todos: [...this.state.todos, newTodo] });
   }
 
 
@@ -124,7 +140,7 @@ export default class AddExpense extends React.Component{
       <View style = {{ flex : 1}} >
 
           <View >
-                <Text>Total Cost: {this.state.totalCost} </Text>
+                <Text>Total Cost: {this.state.totalCost}$ </Text>
                 <Text>Paid By: {this.state.PaidBy} </Text>
           </View>
           <View style = {styles.container}>
@@ -145,7 +161,7 @@ export default class AddExpense extends React.Component{
           </Fab>
           */}
 
-          <TouchableOpacity   style={styles.Floating_Btn} onPress={this.fab_action} >
+          <TouchableOpacity   style={styles.Floating_Btn} onPress={this.float_action} >
                               <Icon name="ios-add"  size={30} color="#ffff" />
           </TouchableOpacity>
 
