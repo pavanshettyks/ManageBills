@@ -12,6 +12,7 @@ export default class AddExpense extends React.Component{
     super(props);
     var id_n = 3;
       this.state = {
+
             id:"4",
             totalCost:"176",
             PaidBy:"Me",
@@ -54,6 +55,7 @@ export default class AddExpense extends React.Component{
   }
 
   componentWillMount = () => {
+      
           BackHandler.addEventListener('hardwareBackPress', this.home_action);
  }
 
@@ -152,9 +154,9 @@ export default class AddExpense extends React.Component{
       <Container>
       <View style = {{ flex : 1}} >
 
-          <View >
-                <Text>Total Cost: {this.state.totalCost}$ </Text>
-                <Text>Paid By: {this.state.PaidBy} </Text>
+          <View style = {styles.header}>
+                <Text style = {styles.text} >Total Cost: {this.state.totalCost}$ </Text>
+                <Text style = {styles.text}>Paid By: {this.state.PaidBy} </Text>
           </View>
           <View style = {styles.container}>
 

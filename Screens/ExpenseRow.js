@@ -32,7 +32,7 @@ export default class ExpenseRow extends React.Component{
                             onChangeText ={this.valueChanged_Cost}    value = {this.props.cost}/>
                 <Button   title="X" onPress = {this.deleteRow} color = 'red' style  = {styles.delete_Button}/>
             </View>
-          
+
           );
         }
 }
@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight:5,
     flex: 1
-
   },
   input_cost:{
     fontSize: 20,

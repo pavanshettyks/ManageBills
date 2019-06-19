@@ -7,6 +7,18 @@ export default StyleSheet.create({
     flex: 5,
     //  height: "70%",
   },
+  header: {
+    backgroundColor:'#e6ccff',
+    flex: 0.8,
+    //  height: "70%",
+  },
+  text:{
+    fontSize: 24,
+    color:'#000000',
+    fontWeight: 'bold',
+    marginTop: 6,
+  //  marginRight:5,
+  },
   Save_Btn: {
     borderColor: 'white',
     padding: 1,

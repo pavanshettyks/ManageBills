@@ -26,7 +26,8 @@ export default StyleSheet.create({
   },
   friends_view:{
     flex: 5,
-    backgroundColor: '#22FCFF',
+    marginBottom: 5,
+
 
   },
   button: {
@@ -34,17 +35,17 @@ export default StyleSheet.create({
     fontSize: 20,
     justifyContent: 'center',
     color: '#333333',
-    marginBottom: 5,
+    marginBottom: 8,
+    marginTop:10,
   },
   button_add_frnd: {
     textAlign: 'center',
     fontSize: 20,
     justifyContent: 'center',
-
- backgroundColor:'#00BCD4',
- borderRadius:10,
- borderWidth: 1,
- borderColor: '#fff'
+    backgroundColor:'#00BCD4',
+    borderRadius:10,
+    borderWidth: 1,
+    borderColor: '#fff'
 
   }
 });

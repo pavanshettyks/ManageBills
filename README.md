@@ -68,7 +68,10 @@ https://rohan-paul.github.io/%0A2017-08-21-react-component-passing-props-to-chil
 
 https://www.robinwieruch.de/react-state-array-add-update-remove/
 
+JavaScript
+
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+https://medium.com/poka-techblog/simplify-your-javascript-use-map-reduce-and-filter-bd02c593cc2d
 #####################################
 react-native start --reset-cache
 

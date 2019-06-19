@@ -6,13 +6,15 @@ import Collapsible from 'react-native-collapsible';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationEvents } from 'react-navigation';
 import Friend_Row from './Friend_Row'
+import Bills_Row from './Bills_Row'
 import styles from './Styles/ManageMainStyles'
 
 class ManageMain extends React.Component {
   state = {
       owe: 20 ,
       owed: 30,
-      collapse: true,
+      collapse: false,
+      collapse_bills:false,
       NextBillId: "1" ,
       Bills:  [ ],
       Friends:[
@@ -79,6 +81,7 @@ class ManageMain extends React.Component {
             else if (screen_id == 'AddExpense') {
                 let new_bill = payload.state.params.new_bill;
                 //console.log("New Bill",new_bill);
+                new_bill = {...new_bill, BillID: this.state.NextBillId}
                 let all_bills = [...this.state.Bills,new_bill]
                 let nextBillId = Number(this.state.NextBillId)+1;
                 this.setState({Bills: all_bills,
@@ -131,39 +134,25 @@ class ManageMain extends React.Component {
                                 <Icon name="ios-arrow-dropdown-circle" style = {{padding:5}} size={25} />
                 </TouchableOpacity>
 
-           <View style={{ flex: this.state.collapse ? 1: 0,  height: this.state.collapse ? null : 0, overflow: 'hidden' }}>
-        { /*          }  <FlatList data = {this.state.Friends }
-                    renderItem = { ({item}) => <Friend_Row {...item}  /> }
-                    keyExtractor={(item, index) => index.toString()}
-                    />
-                    {[...this.state.Friends].map((friend) => { return (  <Friend_Row {...friend}  />  ) })}
+                <View style={{ flex: this.state.collapse ? 1: 0,  height: this.state.collapse ? null : 0, overflow: 'hidden' }}>
+        { /*     {[...this.state.Friends].map((friend) => { return (  <Friend_Row {...friend}  />  ) })}
                     */ }
-
 
                     <FlatList data = {this.state.Friends }
                         renderItem = { ({item}) => <Friend_Row {...item}  /> }
                         keyExtractor={(item, index) => index.toString()}
                         />
-
-                  </View>
-
-
-        { /*           <Collapse>
-                        <CollapseHeader >
-                              <Text style= {this.header_List}>List of Friends</Text>
-                        </CollapseHeader>
-                        <CollapseBody>
-
-                        <FlatList data = {this.state.Friends }
-                        renderItem = { ({item}) => <Friend_Row {...item}  /> }
-                        keyExtractor={(item, index) => index.toString()}
-                        />
-
-                        </CollapseBody>
-               </Collapse>  */ }
-           </View>
-          <View style={{flex: 5, backgroundColor: 'skyblue'}}>
-
+                </View>
+                <TouchableOpacity onPress={ () => {this.setState({collapse_bills:!this.state.collapse_bills})} } style ={{flexDirection:'row', backgroundColor: '#1aa3ff' , marginTop:0.5}}>
+                                <Text style = {{ flex: 3, padding: 5, fontWeight: 'bold',fontSize: 20}} >Bills</Text>
+                                <Icon name="ios-arrow-dropdown-circle" style = {{padding:5}} size={25} />
+                </TouchableOpacity>
+                <View style={{ flex: this.state.collapse_bills ? 1: 0,  height: this.state.collapse_bills ? null : 0, overflow: 'hidden' }}>
+                              <FlatList data = {this.state.Bills }
+                                        renderItem = { ({item}) => <Bills_Row {...item}  /> }
+                                        keyExtractor={(item, index) => index.toString()}
+                                        />
+                </View>
           </View>
           <Button title='Add Expense' style={styles.button} onPress = {this.AddExpenseButton} />
         </View>
