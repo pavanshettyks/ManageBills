@@ -7,6 +7,7 @@ import Dummy from './Dummy';
 import styles from './Styles/AddExpenseStyles'
 
 export default class AddExpense extends React.Component{
+
   constructor(props){
     super(props);
     var id_n = 3;
@@ -61,7 +62,7 @@ export default class AddExpense extends React.Component{
 }
 
   home_action = () =>{
-    this.props.navigation.navigate('ManageMain', { screen_id:"AddExpense" })
+    this.props.navigation.navigate('ManageMain', { screen_id:"AddExpense_noAction" })
     BackHandler.removeEventListener('hardwareBackPress', this.home_action);
     return true;
   }
@@ -100,9 +101,12 @@ export default class AddExpense extends React.Component{
   }
 
   clear_action = ()  => {
-    this.setState({Expense:[]});
-    this.setState({id:"0"});
-      this.setState({totalCost:"0"});
+    this.setState({ Expense:[  { id: "1", title: "", cost: "0", with: [ ] },],
+                    totalCost:"0",
+                    id:"1" });
+    //this.setState({id:"1"});
+    //this.setState({totsalCost:"0"});
+    //this.setState(this.Init_State);
       ToastAndroid.show('All rows cleared', ToastAndroid.SHORT);
   }
 
@@ -111,17 +115,25 @@ export default class AddExpense extends React.Component{
      //this.setTotalCost();
      Alert.alert("Do you want to save?", "Total Cost: "+ this.state.totalCost +"$",
                     [
-
                       {
                         text: 'Cancel',
                         onPress: () => console.log('Cancel Pressed'),
                         style: 'cancel',
                       },
-                      {text: 'OK', onPress: () => { ToastAndroid.show('Bill Saved', ToastAndroid.SHORT);  }},
+                      {text: 'OK', onPress: () => {  this.save_and_home() }},
                     ]
                   );
-  //  this.setState({...Init_State});
+  //
   }
+  save_and_home =() => {
+    new_bill = { totalCost: this.state.totalCost,  PaidBy: this.state.PaidBy , Friends: this.state.Friends , Expense: this.state.Expense }
+    this.props.navigation.navigate('ManageMain', { screen_id:"AddExpense", new_bill: new_bill });
+    this.clear_action();
+  //  this.setState({...this.Init_State});
+    ToastAndroid.show('Bill Saved', ToastAndroid.SHORT);
+
+  }
+
   float_action = ()  => {
      let id = String(Number(this.state.id)+1);
       this.setState({id:String(Number(this.state.id)+1)});

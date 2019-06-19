@@ -49,6 +49,8 @@ npm i @react-native-community/async-storage
 
 https://oblador.github.io/react-native-vector-icons/ --> find icon names here
 
+https://docs.nativebase.io/Components.html#icon-textbox-headref
+
 ######################################################
 
 https://reactnavigation.org/docs/en/getting-started.html

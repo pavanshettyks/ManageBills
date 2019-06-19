@@ -32,7 +32,7 @@ const RootStack = createStackNavigator(
                 }},
   },
   {
-    initialRouteName: 'AddExpense',
+    initialRouteName: 'ManageMain',
   }
 );
 

@@ -13,7 +13,8 @@ class ManageMain extends React.Component {
       owe: 20 ,
       owed: 30,
       collapse: true,
-      BillId: "1",
+      NextBillId: "1" ,
+      Bills:  [ ],
       Friends:[
                 {
                   id: "1",
@@ -23,10 +24,10 @@ class ManageMain extends React.Component {
                 },
               ]
   }
+
   constructor(props){
     super(props);
     this.get();
-
   }
 
   get  = async () =>{
@@ -34,14 +35,27 @@ class ManageMain extends React.Component {
     let Friends = '';
     try {
           Friends = await AsyncStorage.getItem('Friends');
-          let friends_JSON =JSON.parse(Friends);
-          console.log("Friends:",Friends);
           if(Friends){
-            console.log("Friends_JSON_:",friends_JSON);
+            let friends_JSON =JSON.parse(Friends);
+            //console.log("Friends:",Friends);
+          //  console.log("Friends in get:",friends_JSON);
             this.setState({ Friends: friends_JSON});
-            //console.log("Friends__:",Friends);
           }
-        } catch (error) {
+
+          Bills = await AsyncStorage.getItem('Bills');
+          if(Bills){
+            let bills_json = JSON.parse(Bills);
+            this.setState({Bills:bills_json});
+            console.log("Bills in get:",bills_json)
+          }
+          NextBillId = await AsyncStorage.getItem('Next_Bill_ID');
+          if(NextBillId){
+            let nextBill_json = JSON.parse(NextBillId);
+            this.setState({NextBillId: NextBillId});
+            //console.log("Bill_ID in get:",NextBillId)
+          }
+
+         } catch (error) {
           console.log(error.message);
     }
 
@@ -50,7 +64,8 @@ class ManageMain extends React.Component {
 
   willFocusAction = (payload) => {
     let params = payload.state.params;
-    console.log("Mounting.",this.state.Friends);
+    console.log("Mounting Friend.",this.state.Friends);
+    console.log("Mounting Bills.",this.state.Bills);
     if (params) {
             let screen_id = payload.state.params.screen_id;
             if(screen_id == 'AddFriend'){
@@ -58,27 +73,38 @@ class ManageMain extends React.Component {
                 console.log("New ROW",new_friend);
                 new_friend = [...this.state.Friends,new_friend]
                 this.setState({ Friends:new_friend});
-
                 AsyncStorage.setItem('Friends', JSON.stringify(new_friend));
                 console.log("Updated",new_friend);
-
             }
+            else if (screen_id == 'AddExpense') {
+                let new_bill = payload.state.params.new_bill;
+                //console.log("New Bill",new_bill);
+                let all_bills = [...this.state.Bills,new_bill]
+                let nextBillId = Number(this.state.NextBillId)+1;
+                this.setState({Bills: all_bills,
+                                NextBillId: nextBillId });
+                //console.log("Past Bill",this.state.NextBillId);
 
+                //console.log("Past Bill in Num",Number(this.state.NextBillId));
+                console.log("Next Bill",nextBillId);
+                AsyncStorage.setItem('Bills', JSON.stringify(all_bills));
+                AsyncStorage.setItem('Next_Bill_ID', JSON.stringify(nextBillId));
+                console.log("Updated Bill",all_bills);
+            }
    }
 
   }
 
 
+
   ButtonClickCheckFunction = () =>{
-  //Alert.alert("Button Clicked")
-    console.log(this.state.Friends);
-    this.props.navigation.navigate('AddFriend')
+        console.log(this.state.Friends);
+        this.props.navigation.navigate('AddFriend')
   }
 
   AddExpenseButton = () =>{
-                  this.props.navigation.navigate('AddExpense')
+        this.props.navigation.navigate('AddExpense')
   }
-
 
     render() {
       return (
