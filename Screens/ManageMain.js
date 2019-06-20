@@ -109,7 +109,7 @@ class ManageMain extends React.Component {
   valueBillToDetails = (bill) =>{
     console.log("test");
     console.log("lets see all",bill);
-    this.props.navigation.navigate('ViewBills');
+    this.props.navigation.navigate('ViewBills',{ BillDetails:bill }  );
   }
 
     render() {

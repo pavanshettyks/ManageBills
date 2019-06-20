@@ -39,7 +39,7 @@ const RootStack = createStackNavigator(
                 }},
   },
   {
-    initialRouteName: 'ViewBills',
+    initialRouteName: 'ManageMain',
   }
 );
 

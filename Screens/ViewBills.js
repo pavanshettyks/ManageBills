@@ -10,10 +10,13 @@ export default class ViewBills extends React.Component{
   constructor(props){
     super(props);
     var id_n = 3;
+      //  console.log(this.props.navigation.state);
+        console.log("Constructor",this.props.navigation.state.params.BillDetails);
       this.state = {
 
             editable: false,
-            id:"4",
+            ...this.props.navigation.state.params.BillDetails,
+        /*    id:"4",
             totalCost:"176",
 
             PaidBy:"Me",
@@ -51,7 +54,7 @@ export default class ViewBills extends React.Component{
             cost: "120",
             with: ["ab"]
             }
-            ]
+          ] */
     }
   }
 
@@ -111,7 +114,10 @@ export default class ViewBills extends React.Component{
   }
 
   cancel_action = ()  => {
+    console.log("Before Cancel",this.props.navigation.state.params.BillDetails);
     this.setState({editable:!this.state.editable})
+    this.setState({...this.props.navigation.state.params.BillDetailse});
+    console.log("State",this.state);
   //  this.setState({ Expense:[  { id: "1", title: "", cost: "0", with: [ ] },],
     //                totalCost:"0",
       //              id:"1" });
