@@ -87,26 +87,29 @@ class ManageMain extends React.Component {
                 this.setState({Bills: all_bills,
                                 NextBillId: nextBillId });
                 //console.log("Past Bill",this.state.NextBillId);
-
                 //console.log("Past Bill in Num",Number(this.state.NextBillId));
                 console.log("Next Bill",nextBillId);
                 AsyncStorage.setItem('Bills', JSON.stringify(all_bills));
                 AsyncStorage.setItem('Next_Bill_ID', JSON.stringify(nextBillId));
                 console.log("Updated Bill",all_bills);
             }
-   }
-
+       }
   }
-
 
 
   ButtonClickCheckFunction = () =>{
         console.log(this.state.Friends);
-        this.props.navigation.navigate('AddFriend')
+        this.props.navigation.navigate('AddFriend');
   }
 
   AddExpenseButton = () =>{
-        this.props.navigation.navigate('AddExpense')
+        this.props.navigation.navigate('AddExpense');
+  }
+
+  valueBillToDetails = (bill) =>{
+    console.log("test");
+    console.log("lets see all",bill);
+    this.props.navigation.navigate('ViewBills');
   }
 
     render() {
@@ -115,7 +118,6 @@ class ManageMain extends React.Component {
         <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'skyblue'}}>
             <NavigationEvents
             onWillFocus={this.willFocusAction}
-
             />
             <Text style={styles.welcome}>Expense Manager</Text>
             <View style={{flex: 1, backgroundColor: 'powderblue'}}>
@@ -139,7 +141,7 @@ class ManageMain extends React.Component {
                     */ }
 
                     <FlatList data = {this.state.Friends }
-                        renderItem = { ({item}) => <Friend_Row {...item}  /> }
+                        renderItem = { ({item}) => <Friend_Row {...item}   /> }
                         keyExtractor={(item, index) => index.toString()}
                         />
                 </View>
@@ -149,7 +151,7 @@ class ManageMain extends React.Component {
                 </TouchableOpacity>
                 <View style={{ flex: this.state.collapse_bills ? 1: 0,  height: this.state.collapse_bills ? null : 0, overflow: 'hidden' }}>
                               <FlatList data = {this.state.Bills }
-                                        renderItem = { ({item}) => <Bills_Row {...item}  /> }
+                                        renderItem = { ({item}) => <Bills_Row {...item} valueBillToDetails = {this.valueBillToDetails} /> }
                                         keyExtractor={(item, index) => index.toString()}
                                         />
                 </View>

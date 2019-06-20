@@ -4,14 +4,15 @@ import {Text, Alert, TextInput, View, TouchableOpacity, Button, StyleSheet, Flat
 export default class ExpenseRow extends React.Component{
   constructor(props){
     super(props);
-  //  console.log(this.props);
+    console.log("editable: ",this.props.editable);
   this.state = {
     title: this.props.title,
     cost: this.props.total,
+    editable:this.props.editable,
+  //  editable: this.props.editable,
   }
 }
   valueChanged_Title = (text) =>{
-
       this.setState( {title: text} );
       this.props.valueChangedTitle(this.props.id, text);
   }
@@ -26,11 +27,14 @@ export default class ExpenseRow extends React.Component{
         render(){
           return(
             <View style = {styles.container}>
-                <TextInput placeholder ="Enter Item " style = {styles.input_title}
+                <TextInput placeholder ="Enter Item " editable = {this.props.editable} style = {styles.input_title}
                             onChangeText ={this.valueChanged_Title}  value = {this.props.title} />
-                <TextInput keyboardType="numeric" placeholder ="Enter Amount" style = {styles.input_cost}
+                <TextInput keyboardType="numeric" editable = {this.props.editable}  placeholder ="Enter Amount" style = {styles.input_cost}
                             onChangeText ={this.valueChanged_Cost}    value = {this.props.cost}/>
-                <Button   title="X" onPress = {this.deleteRow} color = 'red' style  = {styles.delete_Button}/>
+
+                {    this.props.editable &&
+                    <Button   title="X" onPress = {this.deleteRow} color = 'red' style  = {styles.delete_Button}/>
+                }
             </View>
 
           );

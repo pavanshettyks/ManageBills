@@ -5,11 +5,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 export default class Bills_Row extends React.Component{
   constructor(props){
     super(props);
-    console.log(this.props);
+  //  console.log(this.props);
 
   }
   ButtonP = () => {
-    Alert.alert(this.props.BillID);
+  //  Alert.alert(this.props.BillID); issue
+    this.props.valueBillToDetails(this.props);
   }
 
         render(){

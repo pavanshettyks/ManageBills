@@ -3,6 +3,7 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 import AddFriend from './AddFriend'
 import AddExpense from './AddExpense'
 import ManageMain from './ManageMain'
+import ViewBills from './ViewBills'
 
 //const AppNavigator = createStackNavigator({
   //ManageMain: { screen: ManageMain },
@@ -30,9 +31,15 @@ const RootStack = createStackNavigator(
                 navigationOptions: {
                 header: null,
                 }},
+    ViewBills:{
+                screen: ViewBills,
+                navigationOptions: {
+                  title:"Bill Details",
+                  alignItems: 'center',
+                }},
   },
   {
-    initialRouteName: 'ManageMain',
+    initialRouteName: 'ViewBills',
   }
 );
 

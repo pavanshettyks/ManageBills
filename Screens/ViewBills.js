@@ -3,18 +3,19 @@ import {Text ,Alert,View, TouchableOpacity, ToastAndroid, Button, StyleSheet, Fl
 import { Container, Fab} from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ExpenseRow from './ExpenseRow';
-import Dummy from './Dummy';
 import styles from './Styles/AddExpenseStyles'
 
-export default class AddExpense extends React.Component{
+export default class ViewBills extends React.Component{
 
   constructor(props){
     super(props);
     var id_n = 3;
       this.state = {
 
+            editable: false,
             id:"4",
             totalCost:"176",
+
             PaidBy:"Me",
             Friends: [],
             Expense : [
@@ -106,15 +107,18 @@ export default class AddExpense extends React.Component{
     this.setState({ Expense:[  { id: "1", title: "", cost: "0", with: [ ] },],
                     totalCost:"0",
                     id:"1" });
-    //this.setState({id:"1"});
-    //this.setState({totsalCost:"0"});
-    //this.setState(this.Init_State);
-      ToastAndroid.show('All rows cleared', ToastAndroid.SHORT);
+    //  ToastAndroid.show('All rows cleared', ToastAndroid.SHORT);
+  }
+
+  cancel_action = ()  => {
+    this.setState({editable:!this.state.editable})
+  //  this.setState({ Expense:[  { id: "1", title: "", cost: "0", with: [ ] },],
+    //                totalCost:"0",
+      //              id:"1" });
+    //  ToastAndroid.show('All rows cleared', ToastAndroid.SHORT);
   }
 
   save_action = ()  => {
-  //  let test = this.state.totalCost;
-     //this.setTotalCost();
      Alert.alert("Do you want to save?", "Total Cost: "+ this.state.totalCost +"$",
                     [
                       {
@@ -157,36 +161,36 @@ export default class AddExpense extends React.Component{
           <View style = {styles.header}>
                 <Text style = {styles.text} >Total Cost: {this.state.totalCost}$ </Text>
                 <Text style = {styles.text}>Paid By: {this.state.PaidBy} </Text>
+                { !this.state.editable&&
+                <Button title="Edit Bill" onPress = { ()=>{ this.setState({editable:!this.state.editable}) } } color = 'red'/>
+                }
           </View>
           <View style = {styles.container}>
 
             <FlatList  data = {this.state.Expense}
-                renderItem = { ({item}) => <ExpenseRow {...item}  editable = {true} valueChangedTitle = {this.valueChangedTitle}
+                extraData={this.state}
+                renderItem = { ({item}) => <ExpenseRow {...item} editable = {this.state.editable} valueChangedTitle = {this.valueChangedTitle}
                 valueChangedCost = {this.valueChangedCost} DeleteRow = {this.DeleteRow}  /> }  keyExtractor={(item, index) => index.toString()}
               />
           </View>
-{/*
-          <Fab
-            direction="left"
-            containerStyle={{ }}
-            style={{ backgroundColor: '#5067FF' }}
-            position="topRight"
-            onPress={this.fab_action}>
-            <Icon name="ios-add" />
-          </Fab>
-          */}
 
+          { this.state.editable &&
           <TouchableOpacity   style={styles.Floating_Btn} onPress={this.float_action} >
                               <Icon name="ios-add"  size={30} color="#ffff" />
           </TouchableOpacity>
+          }
 
           <View style = {{ flex : 1, marginBottom:15}} >
+             { this.state.editable&&
+               <View>
               <TouchableOpacity style={styles.Save_Btn} >
                   <Button  title='Save' onPress ={this.save_action}/>
               </TouchableOpacity>
               <TouchableOpacity style={styles.Clear_Btn}>
-                  <Button title='Clear All' onPress ={this.clear_action}/>
+                  <Button title='Cancel' onPress ={this.cancel_action}/>
               </TouchableOpacity>
+              </View>
+            }
               <TouchableOpacity style={styles.Home_Btn}>
                   <Button title='Go To Home' onPress ={this.home_action}/>
               </TouchableOpacity>
