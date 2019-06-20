@@ -16,50 +16,10 @@ export default class ViewBills extends React.Component{
 
             editable: false,
             ...this.props.navigation.state.params.BillDetails,
-        /*    id:"4",
-            totalCost:"176",
-
-            PaidBy:"Me",
-            Friends: [],
-            Expense : [
-              {
-              id: "1",
-              title: "Test2",
-              cost: "10",
-              with: [
-                "raj",
-                "tom",
-                "me"
-              ]
-              },
-              {
-              id: "2",
-              title: "Onoion",
-              cost: "43",
-              with: [
-                "raj",
-                "tom",
-                "me"
-              ]
-            },
-            {
-            id: "3",
-            title: " Milk",
-            cost: "3",
-            with: ["ab"]
-          },
-            {
-            id: "4",
-            title: "Test",
-            cost: "120",
-            with: ["ab"]
-            }
-          ] */
-    }
+      }
   }
 
   componentWillMount = () => {
-
           BackHandler.addEventListener('hardwareBackPress', this.home_action);
  }
 
@@ -116,7 +76,8 @@ export default class ViewBills extends React.Component{
   cancel_action = ()  => {
     console.log("Before Cancel",this.props.navigation.state.params.BillDetails);
     this.setState({editable:!this.state.editable})
-    this.setState({...this.props.navigation.state.params.BillDetailse});
+      this.setState();
+  //  this.setState(this.props.navigation.state.params.BillDetailse);
     console.log("State",this.state);
   //  this.setState({ Expense:[  { id: "1", title: "", cost: "0", with: [ ] },],
     //                totalCost:"0",
@@ -138,7 +99,7 @@ export default class ViewBills extends React.Component{
   //
   }
   save_and_home =() => {
-    new_bill = { totalCost: this.state.totalCost,  PaidBy: this.state.PaidBy , Friends: this.state.Friends , Expense: this.state.Expense }
+    new_bill = { totalCost: this.state.totalCost,  PaidBy: this.state.PaidBy , Friends: this.state.Friends , Expense: this.state.Expense,id:this.state.id }
     this.props.navigation.navigate('ManageMain', { screen_id:"AddExpense", new_bill: new_bill });
     this.clear_action();
   //  this.setState({...this.Init_State});
@@ -147,6 +108,7 @@ export default class ViewBills extends React.Component{
   }
 
   float_action = ()  => {
+    console.log(Number(this.state.id)+1);
      let id = String(Number(this.state.id)+1);
       this.setState({id:String(Number(this.state.id)+1)});
      const new_row = {

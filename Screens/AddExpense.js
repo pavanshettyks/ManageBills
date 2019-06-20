@@ -128,7 +128,7 @@ export default class AddExpense extends React.Component{
   //
   }
   save_and_home =() => {
-    new_bill = { totalCost: this.state.totalCost,  PaidBy: this.state.PaidBy , Friends: this.state.Friends , Expense: this.state.Expense }
+    new_bill = { totalCost: this.state.totalCost,  PaidBy: this.state.PaidBy , Friends: this.state.Friends , Expense: this.state.Expense, id:this.state.id }
     this.props.navigation.navigate('ManageMain', { screen_id:"AddExpense", new_bill: new_bill });
     this.clear_action();
   //  this.setState({...this.Init_State});
