@@ -48,12 +48,12 @@ class ManageMain extends React.Component {
           if(Bills){
             let bills_json = JSON.parse(Bills);
             this.setState({Bills:bills_json});
-            console.log("Bills in get:",bills_json)
+            //console.log("Bills in get:",bills_json)
           }
           NextBillId = await AsyncStorage.getItem('Next_Bill_ID');
           if(NextBillId){
             let nextBill_json = JSON.parse(NextBillId);
-            this.setState({NextBillId: NextBillId});
+             this.setState({NextBillId: NextBillId});
             //console.log("Bill_ID in get:",NextBillId)
           }
 
@@ -66,13 +66,13 @@ class ManageMain extends React.Component {
 
   willFocusAction = (payload) => {
     let params = payload.state.params;
-    console.log("Mounting Friend.",this.state.Friends);
-    console.log("Mounting Bills.",this.state.Bills);
+  //  console.log("Mounting Friend.",this.state.Friends);
+  //  console.log("Mounting Bills.",this.state.Bills);
     if (params) {
             let screen_id = payload.state.params.screen_id;
             if(screen_id == 'AddFriend'){
                 let new_friend = payload.state.params.new_friend;
-                console.log("New ROW",new_friend);
+                //console.log("New ROW",new_friend);
                 new_friend = [...this.state.Friends,new_friend]
                 this.setState({ Friends:new_friend});
                 AsyncStorage.setItem('Friends', JSON.stringify(new_friend));
@@ -86,19 +86,29 @@ class ManageMain extends React.Component {
                 let nextBillId = Number(this.state.NextBillId)+1;
                 this.setState({Bills: all_bills,
                                 NextBillId: nextBillId });
-                //console.log("Past Bill",this.state.NextBillId);
-                //console.log("Past Bill in Num",Number(this.state.NextBillId));
-                console.log("Next Bill",nextBillId);
                 AsyncStorage.setItem('Bills', JSON.stringify(all_bills));
                 AsyncStorage.setItem('Next_Bill_ID', JSON.stringify(nextBillId));
-                console.log("Updated Bill",all_bills);
+            }
+            else if(screen_id == 'UpdateBill'){
+                let update_bill = payload.state.params.update_bill;
+                //console.log("Wanna Update Bill:",update_bill);
+                let all_bills = this.state.Bills.map( bill =>{
+                                      if(bill.BillID == update_bill.BillID ){
+                                              bill = update_bill;
+                                      }
+                                      return bill;
+                                    });
+                this.setState({ Bills: all_bills});
+                AsyncStorage.setItem('Bills', JSON.stringify(all_bills));
+
+
             }
        }
   }
 
 
   ButtonClickCheckFunction = () =>{
-        console.log(this.state.Friends);
+      //  console.log(this.state.Friends);
         this.props.navigation.navigate('AddFriend');
   }
 
@@ -107,8 +117,8 @@ class ManageMain extends React.Component {
   }
 
   valueBillToDetails = (bill) =>{
-    console.log("test");
-    console.log("lets see all",bill);
+
+    console.log("lets see all bill details",bill);
     this.props.navigation.navigate('ViewBills',{ BillDetails:bill }  );
   }
 

@@ -4,7 +4,7 @@ import {Text, Alert, TextInput, View, TouchableOpacity, Button, StyleSheet, Flat
 export default class ExpenseRow extends React.Component{
   constructor(props){
     super(props);
-    console.log("editable: ",this.props.editable);
+//    console.log("editable: ",this.props.editable);
   this.state = {
     title: this.props.title,
     cost: this.props.total,

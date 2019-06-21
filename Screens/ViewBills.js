@@ -9,9 +9,8 @@ export default class ViewBills extends React.Component{
 
   constructor(props){
     super(props);
-    var id_n = 3;
       //  console.log(this.props.navigation.state);
-        console.log("Constructor",this.props.navigation.state.params.BillDetails);
+    //    console.log("Constructor",this.props.navigation.state.params.BillDetails);
       this.state = {
 
             editable: false,
@@ -63,7 +62,7 @@ export default class ViewBills extends React.Component{
 
   DeleteRow = (id) => {
     this.setState({ Expense: [...this.state.Expense.filter(expense => expense.id !== id) ] }, () => { this.setTotalCost() }  );  //to set state and wait to
-    console.log(this.state.Expense);
+    //console.log(this.state.Expense);
   }
 
   clear_action = ()  => {
@@ -74,19 +73,15 @@ export default class ViewBills extends React.Component{
   }
 
   cancel_action = ()  => {
-    console.log("Before Cancel",this.props.navigation.state.params.BillDetails);
-    this.setState({editable:!this.state.editable})
-      this.setState();
+      this.setState({editable:!this.state.editable});
+      this.setState({...this.props.navigation.state.params.BillDetails});
   //  this.setState(this.props.navigation.state.params.BillDetailse);
-    console.log("State",this.state);
-  //  this.setState({ Expense:[  { id: "1", title: "", cost: "0", with: [ ] },],
-    //                totalCost:"0",
-      //              id:"1" });
     //  ToastAndroid.show('All rows cleared', ToastAndroid.SHORT);
   }
 
   save_action = ()  => {
-     Alert.alert("Do you want to save?", "Total Cost: "+ this.state.totalCost +"$",
+
+     Alert.alert("Do you want to update changes?", "Total Cost: "+ this.state.totalCost +"$",
                     [
                       {
                         text: 'Cancel',
@@ -99,8 +94,9 @@ export default class ViewBills extends React.Component{
   //
   }
   save_and_home =() => {
-    new_bill = { totalCost: this.state.totalCost,  PaidBy: this.state.PaidBy , Friends: this.state.Friends , Expense: this.state.Expense,id:this.state.id }
-    this.props.navigation.navigate('ManageMain', { screen_id:"AddExpense", new_bill: new_bill });
+    update_bill = { totalCost: this.state.totalCost,  PaidBy: this.state.PaidBy , Friends: this.state.Friends , Expense: this.state.Expense,id:this.state.id,BillID:this.state.BillID }
+    //console.log("ViewBillscreen:",update_bill);
+    this.props.navigation.navigate('ManageMain', { screen_id:"UpdateBill", update_bill: update_bill });
     this.clear_action();
   //  this.setState({...this.Init_State});
     ToastAndroid.show('Bill Saved', ToastAndroid.SHORT);
@@ -108,7 +104,6 @@ export default class ViewBills extends React.Component{
   }
 
   float_action = ()  => {
-    console.log(Number(this.state.id)+1);
      let id = String(Number(this.state.id)+1);
       this.setState({id:String(Number(this.state.id)+1)});
      const new_row = {
