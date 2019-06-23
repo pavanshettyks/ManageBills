@@ -124,7 +124,7 @@ class ManageMain extends React.Component {
             <NavigationEvents
             onWillFocus={this.willFocusAction}
             />
-            <Text style={styles.welcome}>Expense Manager Test</Text>
+            <Text style={styles.welcome}>Expense Manager</Text>
             <View style={{flex: 1, backgroundColor: 'powderblue'}}>
                 <View style={{flexDirection: 'row'}}>
                   <View style={{flex: 3, flexDirection: 'column'}}>
