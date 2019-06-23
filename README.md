@@ -80,3 +80,6 @@ react-native start --reset-cache
 
 ##############################
 https://hellokoding.com/todo-app-with-react-native/
+
+#################################
+https://pusher.com/tutorials/file-sharing-react-native try

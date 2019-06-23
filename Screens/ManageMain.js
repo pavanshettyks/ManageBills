@@ -80,7 +80,6 @@ class ManageMain extends React.Component {
             }
             else if (screen_id == 'AddExpense') {
                 let new_bill = payload.state.params.new_bill;
-                //console.log("New Bill",new_bill);
                 new_bill = {...new_bill, BillID: this.state.NextBillId}
                 let all_bills = [...this.state.Bills,new_bill]
                 let nextBillId = Number(this.state.NextBillId)+1;
@@ -91,7 +90,6 @@ class ManageMain extends React.Component {
             }
             else if(screen_id == 'UpdateBill'){
                 let update_bill = payload.state.params.update_bill;
-                //console.log("Wanna Update Bill:",update_bill);
                 let all_bills = this.state.Bills.map( bill =>{
                                       if(bill.BillID == update_bill.BillID ){
                                               bill = update_bill;
@@ -108,7 +106,6 @@ class ManageMain extends React.Component {
 
 
   ButtonClickCheckFunction = () =>{
-      //  console.log(this.state.Friends);
         this.props.navigation.navigate('AddFriend');
   }
 
@@ -117,8 +114,6 @@ class ManageMain extends React.Component {
   }
 
   valueBillToDetails = (bill) =>{
-
-    console.log("lets see all bill details",bill);
     this.props.navigation.navigate('ViewBills',{ BillDetails:bill }  );
   }
 
