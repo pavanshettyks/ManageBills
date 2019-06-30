@@ -1,8 +1,10 @@
 import React from 'react'
-import {Text ,Alert,View, TouchableOpacity, ToastAndroid, Button, StyleSheet, FlatList,BackHandler  } from 'react-native';
+import {Text ,Alert,View, TouchableOpacity, ToastAndroid, Button, StyleSheet, FlatList,BackHandler,Picker  } from 'react-native';
 import { Container, Fab} from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ExpenseRow from './ExpenseRow';
+import AsyncStorage from '@react-native-community/async-storage';
+import MultiSelect from 'react-native-multiple-select';
 import Dummy from './Dummy';
 import styles from './Styles/AddExpenseStyles'
 
@@ -16,7 +18,11 @@ export default class AddExpense extends React.Component{
             id:"4",
             totalCost:"176",
             PaidBy:"Me",
-            Friends: [],
+            Friends:[ {
+                      id: "0",
+                      name: "Me",
+                      },
+                    ],
             Expense : [
               {
               id: "1",
@@ -52,7 +58,21 @@ export default class AddExpense extends React.Component{
             }
             ]
     }
+      this.get();
   }
+
+  get  = async () =>{
+    let Friends = '';
+    try {
+          Friends = await AsyncStorage.getItem('Friends');
+          if(Friends){
+            let friends_JSON =JSON.parse(Friends);
+            this.setState({ Friends: [...this.state.Friends,...friends_JSON] });
+           }
+         } catch (error) {
+          console.log(error.message);
+    }
+   }
 
   componentWillMount = () => {
 
@@ -106,15 +126,10 @@ export default class AddExpense extends React.Component{
     this.setState({ Expense:[  { id: "1", title: "", cost: "0", with: [ ] },],
                     totalCost:"0",
                     id:"1" });
-    //this.setState({id:"1"});
-    //this.setState({totsalCost:"0"});
-    //this.setState(this.Init_State);
       ToastAndroid.show('All rows cleared', ToastAndroid.SHORT);
   }
 
   save_action = ()  => {
-  //  let test = this.state.totalCost;
-     //this.setTotalCost();
      Alert.alert("Do you want to save?", "Total Cost: "+ this.state.totalCost +"$",
                     [
                       {
@@ -155,8 +170,26 @@ export default class AddExpense extends React.Component{
       <View style = {{ flex : 1}} >
 
           <View style = {styles.header}>
+
                 <Text style = {styles.text} >Total Cost: {this.state.totalCost}$ </Text>
-                <Text style = {styles.text}>Paid By: {this.state.PaidBy} </Text>
+                <View style={{flexDirection:'row'}}>
+                      <Text style = {styles.text}>Paid By:</Text>
+                      <Picker selectedValue={this.state.PaidBy}
+                          style={{height: 45, width: 100, }}
+                          onValueChange={(itemValue, itemIndex) =>
+                          this.setState({PaidBy: itemValue})
+                          }>
+                          {
+                            this.state.Friends.map( (v)=>{
+                              return <Picker.Item label={v.name} value={v.name} key={v.id} /> 
+                            })
+                          }
+                      </Picker>
+                </View>
+                <View style={{flexDirection:'row'}} >
+                      <Text style = {styles.text}>Shared Between: </Text>
+
+                </View>
           </View>
           <View style = {styles.container}>
 

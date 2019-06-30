@@ -45,26 +45,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#d9b3ff',
     borderColor: 	 '#e6e6ff',
-    padding: 4,
+    padding: 2,
     borderWidth: 1,
   //  marginTop:2
 },
   input_title:{
-    fontSize: 20,
+    fontSize: 14,
     backgroundColor:'#e6ccff',
     marginLeft: 5,
     marginRight:5,
     flex: 1
   },
   input_cost:{
-    fontSize: 20,
+    fontSize: 14,
     backgroundColor:'#e6ccff',
     marginLeft: 5,
     marginRight:5,
     flex: 0.5
   },
   delete_Button:{
-    fontSize: 20,
+    fontSize: 14,
     marginLeft: 5,
     marginRight:5,
     flex: 0.5

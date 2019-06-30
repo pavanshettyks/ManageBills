@@ -14,7 +14,7 @@ export default StyleSheet.create({
     //  height: "70%",
   },
   text:{
-    fontSize: 24,
+    fontSize: 20,
     color:'#000000',
     fontWeight: 'bold',
     marginTop: 6,

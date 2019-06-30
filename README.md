@@ -47,6 +47,10 @@ react-native link react-native-vector-icons -------> For react native icons
 npm i @react-native-community/async-storage
  react-native link @react-native-community/async-storage ---> AsyncStorage installation
 
+
+ npm install react-native-multiple-select --save
+ react-native link react-native-multiple-select   ----> drop down with multiple select options
+
 https://oblador.github.io/react-native-vector-icons/ --> find icon names here
 
 https://docs.nativebase.io/Components.html#icon-textbox-headref
