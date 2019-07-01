@@ -4,9 +4,10 @@ import { Container, Fab} from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ExpenseRow from './ExpenseRow';
 import AsyncStorage from '@react-native-community/async-storage';
-import MultiSelect from 'react-native-multiple-select';
-import Dummy from './Dummy';
-import styles from './Styles/AddExpenseStyles'
+import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+//import Dummy from './Dummy';
+import styles from './Styles/AddExpenseStyles';
+
 
 export default class AddExpense extends React.Component{
 
@@ -14,7 +15,7 @@ export default class AddExpense extends React.Component{
     super(props);
     var id_n = 3;
       this.state = {
-
+            sharedWith: [ "0" ],
             id:"4",
             totalCost:"176",
             PaidBy:"Me",
@@ -44,18 +45,7 @@ export default class AddExpense extends React.Component{
                 "me"
               ]
             },
-            {
-            id: "3",
-            title: " Milk",
-            cost: "3",
-            with: ["ab"]
-          },
-            {
-            id: "4",
-            title: "Test",
-            cost: "120",
-            with: ["ab"]
-            }
+
             ]
     }
       this.get();
@@ -63,10 +53,12 @@ export default class AddExpense extends React.Component{
 
   get  = async () =>{
     let Friends = '';
+
     try {
           Friends = await AsyncStorage.getItem('Friends');
           if(Friends){
             let friends_JSON =JSON.parse(Friends);
+
             this.setState({ Friends: [...this.state.Friends,...friends_JSON] });
            }
          } catch (error) {
@@ -143,18 +135,18 @@ export default class AddExpense extends React.Component{
   //
   }
   save_and_home =() => {
-    new_bill = { totalCost: this.state.totalCost,  PaidBy: this.state.PaidBy , Friends: this.state.Friends , Expense: this.state.Expense, id:this.state.id }
+    new_bill = { totalCost: this.state.totalCost,  PaidBy: this.state.PaidBy , Friends: this.state.Friends , Expense: this.state.Expense, id:this.state.id,
+                 sharedWith:this.state.sharedWith  }
     this.props.navigation.navigate('ManageMain', { screen_id:"AddExpense", new_bill: new_bill });
     this.clear_action();
-  //  this.setState({...this.Init_State});
     ToastAndroid.show('Bill Saved', ToastAndroid.SHORT);
 
   }
 
   float_action = ()  => {
-     let id = String(Number(this.state.id)+1);
+      let id = String(Number(this.state.id)+1);
       this.setState({id:String(Number(this.state.id)+1)});
-     const new_row = {
+      const new_row = {
               id: id,
               title: "",
               cost: "0",
@@ -163,33 +155,48 @@ export default class AddExpense extends React.Component{
      this.setState({Expense: [...this.state.Expense,new_row]});
   }
 
+  onSelectedItemsChange = (sharedWith) => {
+    this.setState({ sharedWith });
+  };
 
   render(){
     return(
-      <Container>
+
       <View style = {{ flex : 1}} >
 
           <View style = {styles.header}>
 
                 <Text style = {styles.text} >Total Cost: {this.state.totalCost}$ </Text>
-                <View style={{flexDirection:'row'}}>
+
+                <View style={{flexDirection:'row', paddingBottom:5}}>
                       <Text style = {styles.text}>Paid By:</Text>
                       <Picker selectedValue={this.state.PaidBy}
-                          style={{height: 45, width: 100, }}
+                          style={{height: 45, width: 100, fontWeight: 'bold', }}
                           onValueChange={(itemValue, itemIndex) =>
                           this.setState({PaidBy: itemValue})
                           }>
                           {
                             this.state.Friends.map( (v)=>{
-                              return <Picker.Item label={v.name} value={v.name} key={v.id} /> 
+                              return <Picker.Item label={v.name} value={v.name} key={v.id} />
                             })
                           }
                       </Picker>
                 </View>
-                <View style={{flexDirection:'row'}} >
-                      <Text style = {styles.text}>Shared Between: </Text>
+                <View style={{flexDirection:'column', marginTop:-30}}>
+
+                      <SectionedMultiSelect
+                      items={this.state.Friends}
+                      uniqueKey="id"
+                      selectText="Shared Between..."
+                      showDropDowns={true}
+                      highlightChildren ={true}
+                      readOnlyHeadings={false}
+                      onSelectedItemsChange={this.onSelectedItemsChange}
+                      selectedItems={this.state.sharedWith}
+                    />
 
                 </View>
+
           </View>
           <View style = {styles.container}>
 
@@ -198,22 +205,13 @@ export default class AddExpense extends React.Component{
                 valueChangedCost = {this.valueChangedCost} DeleteRow = {this.DeleteRow}  /> }  keyExtractor={(item, index) => index.toString()}
               />
           </View>
-{/*
-          <Fab
-            direction="left"
-            containerStyle={{ }}
-            style={{ backgroundColor: '#5067FF' }}
-            position="topRight"
-            onPress={this.fab_action}>
-            <Icon name="ios-add" />
-          </Fab>
-          */}
+
 
           <TouchableOpacity   style={styles.Floating_Btn} onPress={this.float_action} >
                               <Icon name="ios-add"  size={30} color="#ffff" />
           </TouchableOpacity>
 
-          <View style = {{ flex : 1, marginBottom:15}} >
+          <View style = {{  justifyContent: 'flex-end', paddingBottom:9}} >
               <TouchableOpacity style={styles.Save_Btn} >
                   <Button  title='Save' onPress ={this.save_action}/>
               </TouchableOpacity>
@@ -225,7 +223,7 @@ export default class AddExpense extends React.Component{
               </TouchableOpacity>
           </View>
       </View>
-      </Container>
+
 
     );
   }

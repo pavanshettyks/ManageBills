@@ -10,7 +10,7 @@ export default StyleSheet.create({
   },
   header: {
     backgroundColor:'#e6ccff',
-    flex: 1,
+    flex: 1.1,
     paddingBottom: 30
 //    marginBottom:3,
     //  height: "70%",

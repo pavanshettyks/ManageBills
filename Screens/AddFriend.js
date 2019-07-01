@@ -12,7 +12,6 @@ class AddFriend extends React.Component{
 
  save_action = () =>{
    const new_row = {
-            id: "2",
             name: this.state.name,
             mobile: this.state.mobile,
             email: this.state.email,

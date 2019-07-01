@@ -4,6 +4,7 @@ import AddFriend from './AddFriend'
 import AddExpense from './AddExpense'
 import ManageMain from './ManageMain'
 import ViewBills from './ViewBills'
+import Dummy from './Dummy'
 
 //const AppNavigator = createStackNavigator({
   //ManageMain: { screen: ManageMain },

@@ -17,6 +17,7 @@ class ManageMain extends React.Component {
       collapse_bills:false,
       NextBillId: "1" ,
       Bills:  [ ],
+      NextFriendId: "2",
       Friends:[
                 {
                   id: "1",
@@ -72,9 +73,13 @@ class ManageMain extends React.Component {
             let screen_id = payload.state.params.screen_id;
             if(screen_id == 'AddFriend'){
                 let new_friend = payload.state.params.new_friend;
-                //console.log("New ROW",new_friend);
+                //let id = { id: this.state.NextFriendId };
+                 new_friend.id =  this.state.NextFriendId;
+                //new_friend = { new_friend, id: this.state.NextFriendId};
+                console.log("New ROW",new_friend);
                 new_friend = [...this.state.Friends,new_friend]
-                this.setState({ Friends:new_friend});
+                let NextFriendId = Number(this.state.NextFriendId)+1;
+                this.setState({ Friends:new_friend, NextFriendId: NextFriendId });
                 AsyncStorage.setItem('Friends', JSON.stringify(new_friend));
                 console.log("Updated",new_friend);
             }
@@ -83,6 +88,8 @@ class ManageMain extends React.Component {
                 new_bill = {...new_bill, BillID: this.state.NextBillId}
                 let all_bills = [...this.state.Bills,new_bill]
                 let nextBillId = Number(this.state.NextBillId)+1;
+                  console.log("New ROW",new_bill);
+                  console.log("All ROW",all_bills);
                 this.setState({Bills: all_bills,
                                 NextBillId: nextBillId });
                 AsyncStorage.setItem('Bills', JSON.stringify(all_bills));

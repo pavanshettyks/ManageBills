@@ -3,7 +3,9 @@ import {Text ,Alert,View, TouchableOpacity, ToastAndroid, Button, StyleSheet, Fl
 import { Container, Fab} from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ExpenseRow from './ExpenseRow';
-import styles from './Styles/AddExpenseStyles'
+import AsyncStorage from '@react-native-community/async-storage';
+import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+import styles from './Styles/ViewBillsStyles'
 
 export default class ViewBills extends React.Component{
 
@@ -16,6 +18,7 @@ export default class ViewBills extends React.Component{
             editable: false,
             ...this.props.navigation.state.params.BillDetails,
       }
+
   }
 
   componentWillMount = () => {
@@ -115,6 +118,9 @@ export default class ViewBills extends React.Component{
      this.setState({Expense: [...this.state.Expense,new_row]});
   }
 
+  onSelectedItemsChange = (sharedWith) => {
+    this.setState({ sharedWith });
+  };
 
   render(){
     return(
@@ -124,8 +130,25 @@ export default class ViewBills extends React.Component{
           <View style = {styles.header}>
                 <Text style = {styles.text} >Total Cost: {this.state.totalCost}$ </Text>
                 <Text style = {styles.text}>Paid By: {this.state.PaidBy} </Text>
+                <Text style = {styles.text}>Shared</Text>
+                <View style={{flexDirection:'column', marginTop:-30}}>
+
+                      <SectionedMultiSelect
+                      items={this.state.Friends}
+                      uniqueKey="id"
+                      selectText="with..."
+                      showDropDowns={true}
+                      highlightChildren ={true}
+                      readOnlyHeadings={false}
+                      onSelectedItemsChange={this.onSelectedItemsChange}
+                      selectedItems={this.state.sharedWith}
+                    />
+
+                </View>
                 { !this.state.editable&&
-                <Button title="Edit Bill" onPress = { ()=>{ this.setState({editable:!this.state.editable}) } } color = 'red'/>
+
+                <Button title="Edit Bill" onPress = { ()=>{ this.setState({editable:!this.state.editable}); console.log(this.state.Friends); } } color = 'red'/>
+
                 }
           </View>
           <View style = {styles.container}>
@@ -143,7 +166,7 @@ export default class ViewBills extends React.Component{
           </TouchableOpacity>
           }
 
-          <View style = {{ flex : 1, marginBottom:15}} >
+          <View style = {{  marginBottom:15 ,   justifyContent: 'flex-end'}} >
              { this.state.editable&&
                <View>
               <TouchableOpacity style={styles.Save_Btn} >

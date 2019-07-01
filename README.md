@@ -51,6 +51,16 @@ npm i @react-native-community/async-storage
  npm install react-native-multiple-select --save
  react-native link react-native-multiple-select   ----> drop down with multiple select options
 
+npm i react-native-sectioned-multi-select --> dropdown
+ react-native link react-native-sectioned-multi-select
+
+ react-native unlink lib-name-example
+ npm uninstall --save lib-name-example
+
+https://stackoverflow.com/questions/46681488/multi-select-dropdown-in-react-native -->soluyion
+https://github.com/renrizzolo/react-native-sectioned-multi-select--?????????
+
+
 https://oblador.github.io/react-native-vector-icons/ --> find icon names here
 
 https://docs.nativebase.io/Components.html#icon-textbox-headref
